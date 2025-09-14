@@ -1,12 +1,12 @@
 #include "keypad.h"
 #include <Arduino.h>
 
-constexpr int Latch = 14; 
-constexpr int Clock = 15; 
-constexpr int Data = 13; 
-
-void Keypad::Init()
+void Keypad::Init(int InLatch, int InClock, int InData)
 {
+  Latch = InLatch;
+  Clock = InClock;
+  Data = InData;
+  
   pinMode(Latch, OUTPUT);
   pinMode(Clock, OUTPUT);
   pinMode(Data, INPUT);

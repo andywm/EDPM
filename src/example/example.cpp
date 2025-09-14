@@ -1,20 +1,16 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include <Adafruit_SSD1306.h>
-//#include "oled_interface.h"
-#include "keypad.h"
+#include "dpm.h"
 
-//#include "pages/dpm_base_page.h"
-#include "pages/display_page_manager.h"
-#include "pages/dpm_interact_page.h"
-#include "pages/dpm_info_page.h"
-
+constexpr int Latch = 14; 
+constexpr int Clock = 15; 
+constexpr int Data = 13; 
 #define I2C0_SDA 2
 #define I2C0_SCL 3
 #define SWITCH 4
 
 TwoWire I2CBus {I2C0_SDA, I2C0_SCL};
-
 
 struct Example : public InfoTextPage
 {
@@ -62,9 +58,9 @@ struct Example3 : public InteractivePage
 
 	static void OnAction()
 	{
-		//static bool bLightMode = false;
-		//bLightMode = !bLightMode;
-		digitalWrite(12, true);
+		static bool bLightMode = false;
+		bLightMode = !bLightMode;
+		digitalWrite(12, false);
 	}
 
 	Example3()
@@ -91,23 +87,14 @@ struct ExampleChild : public InfoTextPage
 
 Keypad keypad;
 
-void Test()
-{
-
-}
-
 void setup()
 {
-	keypad.Init();
+	keypad.Init(Latch, Clock, Data);
 
 	pinMode(12, OUTPUT);
-	digitalWrite(12, false);
+	digitalWrite(12, true);
 
 	PageManager.InitialiseDisplaySubsystem(128, 64, I2CBus);
-
-	GetAllocationsTable().AddCallback(&Example3::OnAction);
-	GetAllocationsTable().CallbackTable[0] = &Example3::OnAction;
-	//AllocationsTable.CallbackTable[0] = &Example3::OnAction;
 
 	PageManager.RegisterRoot(TestPage1);
 	PageManager.RegisterRoot(TestPage2);

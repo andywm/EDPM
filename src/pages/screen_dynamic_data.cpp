@@ -10,17 +10,19 @@ PreAllocatedTables& GetAllocationsTable()
 
 uint8_t PreAllocatedTables::AddCallback(const ActionCbk& Cbk)
 {
-    if (CallbackCount < CallbacksMax)
+    uint8_t InsertIndex = CallbackCount;
+    if(InsertIndex < CallbacksMax)
     {
-        CallbackTable[CallbackCount] = Cbk;
-        return ++CallbackCount;
+        CallbackCount++;
+        CallbackTable[InsertIndex] = Cbk;
+        return InsertIndex;
     }
     return UINT8_MAX;
 }
 
 void PreAllocatedTables::InvokeCallback(uint8_t Idx)
 {
-    if(Idx < CallbackCount)
+    if (Idx < CallbackCount)
     {
         CallbackTable[Idx]();
     }

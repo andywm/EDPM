@@ -77,7 +77,7 @@ public:
 	uint8_t AddCallback(const ActionCbk& Cbk);
 	void InvokeCallback(uint8_t Idx);
 
-//private:
+private:
 	ActionCbk CallbackTable[CallbacksMax] = {nullptr};
 	uint8_t CallbackCount = 0;
 };

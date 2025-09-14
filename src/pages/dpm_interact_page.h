@@ -28,7 +28,6 @@ struct InteractivePage : public InfoTextPage
 	void SetLineAsButton(const char* Text, const ActionCbk& Callback)
 	{
 		SetLine<LineNum>(Text);
-		//Lines[LineNum].FunctionIdx = 0;
 		Lines[LineNum].FunctionIdx = GetAllocationsTable().AddCallback(Callback);	
 	}
 

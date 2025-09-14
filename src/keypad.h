@@ -16,8 +16,11 @@ struct Keypad
 {
   int LastState = 0;
   int CurrentState = 0;
+  int Latch = 0;
+  int Clock = 0;
+  int Data = 0;
 
-  void Init();
+  void Init(int Latch, int Clock, int Data);
   void UpdatePadState();
 
   bool IsButtonDown(EPadButton) const;
